@@ -1,7 +1,7 @@
 {
   "name": "synup",
   "displayName": "Synup",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Manage local listings, reviews, posts and rankings for every client and location in Synup, and build on Synup's API and webhooks.",
   "author": {
     "name": "Synup",

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "synup",
+  "displayName": "Synup",
+  "version": "1.0.0",
+  "description": "Manage local listings, reviews, posts and rankings for every client and location in Synup, and build on Synup's API and webhooks.",
+  "logo": "assets/logo-padded.svg",
+  "suggestedPrompts": [
+    "Which of my Synup locations have listing problems right now?",
+    "Show me this week's 1- and 2-star Google reviews in Synup and draft replies. Don't post anything yet.",
+    "Write a script that exports every review for one Synup client to CSV using the Synup API."
+  ],
+  "author": {
+    "name": "Synup",
+    "url": "https://www.synup.com"
+  },
+  "homepage": "https://synup.com/developers/mcp/",
+  "repository": "https://github.com/synup/synup-agent-plugins",
+  "license": "MIT",
+  "keywords": [
+    "synup",
+    "local-seo",
+    "business-listings",
+    "reviews",
+    "google-business-profile",
+    "social-posts",
+    "agencies",
+    "mcp",
+    "api",
+    "webhooks"
+  ]
+}

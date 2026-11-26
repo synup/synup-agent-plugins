@@ -1,11 +1,11 @@
-# Synup for Cursor, Cline and other AI tools
+# Synup for Cursor, Antigravity, Devin, Cline and other AI tools
 
-[Synup](https://www.synup.com) helps agencies and multi-location businesses keep their business listings accurate across directories, answer reviews, publish posts to Google and social networks, and track how they rank in local search. This repository connects AI tools to your Synup account: a Cursor plugin, install notes for Cline, and Synup's entry for the official MCP Registry.
+[Synup](https://www.synup.com) helps agencies and multi-location businesses keep their business listings accurate across directories, answer reviews, publish posts to Google and social networks, and track how they rank in local search. This repository connects AI tools to your Synup account: one plugin that Cursor, Google Antigravity and Devin each install, an extension for Gemini CLI, install notes for Cline, and Synup's entry for the official MCP Registry.
 
-The Cursor plugin adds two things to Cursor:
+The plugin adds two things to your AI tool:
 
-- **The Synup MCP server.** Cursor's agent can look things up and get work done in your Synup workspace: clients, locations, listings, reviews, posts and rankings.
-- **Three skills** that Cursor's agent reads when your request matches one:
+- **The Synup MCP server.** The tool's agent can look things up and get work done in your Synup workspace: clients, locations, listings, reviews, posts and rankings.
+- **Three skills** that the agent reads when your request matches one:
   - **Synup workflows**: everyday jobs through the MCP server. It shows you drafts and asks before it changes anything.
   - **Synup API**: writing code against Synup's REST API.
   - **Synup webhooks**: receiving and checking the events Synup sends to your server.
@@ -22,6 +22,31 @@ The plugin is configuration and instructions only. Nothing in it runs on your ma
 
 Cursor never sees your Synup password. To disconnect, open **Developer → MCP Connections** in Synup and click **Revoke** next to Cursor.
 
+## Install in Google Antigravity
+
+1. Install the plugin from the Antigravity CLI:
+
+   ```bash
+   agy plugin install https://github.com/synup/synup-agent-plugins
+   ```
+
+   It works in the Antigravity app, IDE and CLI.
+2. In the app, open **Customizations → Installed**. Under **MCP Servers**, click **Authenticate** next to Synup.
+3. Sign in to Synup in your browser as above. Antigravity then shows a code: copy it, paste it into **Enter authorization code**, and click **Submit**.
+
+## Install in Devin
+
+1. Install the plugin from the Devin CLI:
+
+   ```bash
+   devin plugins install synup/synup-agent-plugins
+   ```
+
+   It works in the Devin CLI and Devin Desktop.
+2. The first time Devin uses Synup, it opens your browser to sign in to Synup as above.
+
+To use Synup in Devin's cloud sessions, connect it in Devin's web app. Add an MCP server with the URL `https://ai.synup.com/mcp`, choose **OAuth**, and click **Connect**.
+
 ## Install in Cline
 
 1. In Cline, open **MCP Servers → Remote Servers**.
@@ -29,6 +54,14 @@ Cursor never sees your Synup password. To disconnect, open **Developer → MCP C
 3. Click **Authenticate** next to `synup`, then sign in to Synup in your browser as above.
 
 Or ask Cline to "set up the Synup MCP server from https://github.com/synup/synup-agent-plugins". It follows [llms-install.md](llms-install.md).
+
+## Install in Gemini CLI
+
+```bash
+gemini extensions install https://github.com/synup/synup-agent-plugins
+```
+
+Then run `/mcp auth synup` in Gemini CLI and sign in to Synup in your browser.
 
 ## Any other MCP app
 
@@ -53,21 +86,25 @@ Writing code:
 
 - **MCP server:** works on Synup plans that include the Developer API, and during a Synup free trial.
 - **REST API and webhooks:** need a plan that includes the Developer API. You create API keys and webhook endpoints under **Developer** in Synup.
-- Cursor can see and do only what you can in that workspace, under your role and client access.
-- Changes made through Cursor are real: a review reply is posted publicly, and a post goes out on the dates it's given. Synup's Autonomy settings (Automatic, Ask first, Off) govern Synup's own assistant, Sydekick, not Cursor. Read what the agent proposes before you approve it.
+- Your AI tool can see and do only what you can in that workspace, under your role and client access.
+- Changes made through your AI tool are real: a review reply is posted publicly, and a post goes out on the dates it's given. Synup's Autonomy settings (Automatic, Ask first, Off) govern Synup's own assistant, Sydekick, not other AI tools. Read what the agent proposes before you approve it.
 
 ## What's in this repository
 
 | Path | What it does |
 | --- | --- |
-| `.cursor-plugin/plugin.json` | The plugin's name, description and logo |
-| `mcp.json` | Connects Cursor to `https://ai.synup.com/mcp`; you sign in through your browser |
+| `.cursor-plugin/plugin.json` | The plugin's name, description and logo for Cursor |
+| `.antigravity-plugin/plugin.json` | The same for Google Antigravity, with starter prompts |
+| `.devin-plugin/plugin.json` | The same for Devin |
+| `mcp.json` | Connects Cursor and Devin to `https://ai.synup.com/mcp`; you sign in through your browser |
+| `mcp_config.json` | The same connection for Antigravity |
+| `gemini-extension.json` | The Gemini CLI extension: the same connection |
 | `skills/synup-workflows/SKILL.md` | How the agent finds and uses Synup's tools, and when it must ask you first |
 | `skills/synup-api/SKILL.md` | API keys, auth header, paging, rate limits and errors, with links to the API reference |
 | `skills/synup-webhooks/SKILL.md` | Checking webhook signatures, event payloads, retries and setup |
 | `llms-install.md` | Step-by-step setup that Cline and other AI agents can follow |
 | `server.json` | Synup's entry for the official MCP Registry |
-| `assets/` | The Synup logo (SVG, and PNG at 400 and 512 pixels) |
+| `assets/` | The Synup logo (SVG, a padded SVG, and PNG at 400 and 512 pixels) |
 
 ## Developer documentation
 

@@ -1,0 +1,26 @@
+{
+  "name": "synup",
+  "version": "1.0.0",
+  "description": "Manage local listings, reviews, posts and rankings for every client and location in Synup, and build on Synup's API and webhooks.",
+  "author": {
+    "name": "Synup",
+    "email": "support@synup.com"
+  },
+  "homepage": "https://synup.com/developers/mcp/",
+  "repository": "https://github.com/synup/synup-agent-plugins",
+  "license": "MIT",
+  "keywords": [
+    "synup",
+    "local-seo",
+    "business-listings",
+    "reviews",
+    "google-business-profile",
+    "social-posts",
+    "agencies",
+    "mcp",
+    "api",
+    "webhooks"
+  ],
+  "logo": "assets/logo.svg",
+  "mcpServers": "mcp.json"
+}
