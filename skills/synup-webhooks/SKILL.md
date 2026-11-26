@@ -22,13 +22,13 @@ A `POST` with a JSON body:
   "type": "review.received",
   "created_at": "2026-11-26T09:30:00.000Z",
   "api_version": "2026-06-01",
-  "data": { "platform": "google", "rating": 2, "author": "...", "review_date": "...", "client_location_id": "...", "body": "..." }
+  "data": { "review_id": "...", "client_id": "...", "platform": "google", "rating": 2, "author": "...", "review_date": "...", "client_location_id": "...", "body": "..." }
 }
 ```
 
 Headers:
 
-- `Synup-Signature`: `t=<unix seconds>,v1=<hex>`. See below.
+- `Synup-Signature`: `t=<unix seconds>,v1=<hex>`, with a second `v1` for 7 days after the secret is rotated. See below.
 - `Synup-Delivery`: the same value as `id`. Use it to drop duplicates.
 - `Synup-Event`: the same value as `type`, so you can route before parsing.
 
@@ -37,7 +37,7 @@ Headers:
 ## Check every request
 
 1. Read the raw body bytes before any JSON parser or body middleware touches them. Re-serialized JSON won't match.
-2. Split `Synup-Signature` on commas into `t` and `v1`. Accept any `v1` that matches.
+2. Split `Synup-Signature` on commas into `t` and one or more `v1` values. Accept the request if any `v1` matches.
 3. Reject the request if `t` is more than 300 seconds from now.
 4. Compute HMAC-SHA256 over `<t>.<raw body>`, using the whole secret string (including `whsec_`) as the key. Hex-encode it and compare it with `v1` in constant time.
 5. On a mismatch, return `401`; Synup retries non-2xx responses. Otherwise return 2xx at once and do the work in a background job.
@@ -48,7 +48,7 @@ Node (Express):
 import crypto from "node:crypto";
 import express from "express";
 
-// The old secret is only needed for about a day after rotating (see below).
+// The second secret is optional (see Rotating the secret below).
 const SECRETS = [process.env.SYNUP_WEBHOOK_SECRET, process.env.SYNUP_WEBHOOK_SECRET_OLD].filter(
   (s): s is string => Boolean(s),
 );
@@ -132,9 +132,9 @@ must give `v1=6204bc359e5eabdf2060a37634581c0276a9c99221d54a6063cb4373f43b2b04`.
 
 | Event | `data` fields |
 | --- | --- |
-| `review.received` | `platform`, `rating`, `author`, `review_date`, `client_location_id`, `body` |
-| `review.reply.posted` | `platform`, `client_location_id` |
-| `review.reply.failed` | `platform`, `client_location_id`, `reason` |
+| `review.received` | `review_id`, `client_id`, `platform`, `rating`, `author`, `review_date`, `client_location_id`, `body` |
+| `review.reply.posted` | `review_id`, `client_id`, `platform`, `client_location_id` |
+| `review.reply.failed` | `review_id`, `client_id`, `platform`, `client_location_id`, `reason` |
 | `listing.sync.completed` | `client_location_id`, `listing_id`, `site`, `live_link`, `listing_site_id` |
 | `listing.sync.failed` | `client_location_id`, `listing_id`, `site`, `reason` |
 | `post.published` | `post_id`, `platform`, `action`, `platform_post_id`, `post_link` |
@@ -145,7 +145,7 @@ must give `v1=6204bc359e5eabdf2060a37634581c0276a9c99221d54a6063cb4373f43b2b04`.
 
 - `client_location_id` and `location_id` both hold the Synup location id, the same `id` that `GET /locations` returns.
 - Treat any field as possibly `null`, and ignore fields you don't recognize, since payloads can gain fields.
-- Payloads can be thin. `review.received`, for example, has no review id or client id, so look up details through the API when you need them.
+- Payloads can be thin, so look up anything else you need through the API. `review_id` and `client_id` are the same ids the API uses; `client_id` is `null` when Synup doesn't know the client.
 
 All events you can subscribe to today:
 
@@ -172,9 +172,11 @@ Some events are listed in Synup but not sent yet, so they can't be selected: `li
 
 - A delivery fails on a non-2xx status, a network error, or no answer within 10 seconds. A failed delivery is retried after 5 seconds, 30 seconds, 2 minutes, 10 minutes, 1 hour, 4 hours and 19 hours: eight attempts over about a day. Point the URL at its final address so no redirects are involved.
 - An endpoint that keeps failing for 72 hours is paused, and the person who created it gets an email. While it's paused, events are dropped, not queued. After fixing the receiver, resume it under **Developer → Webhooks**.
-- An event can arrive more than once and out of order. Drop duplicates by `id` (or `Synup-Delivery`). `created_at` is set when each attempt is sent, so a retry carries a later time; don't use it to find duplicates or to order events.
+- An event can arrive more than once and out of order. Drop duplicates by `id` (or `Synup-Delivery`). `created_at` is when the delivery was created and stays the same on every retry of it, but events can still arrive out of order.
 - Deliveries are kept for 30 days, and any of them can be replayed from the delivery log under **Developer → Webhooks**.
 
 ## Rotating the secret
 
-Rotating (under **Developer → Webhooks**) takes effect at once: new deliveries are signed with the new secret. Retries of deliveries that started before the rotation stay signed with the old secret, for up to about a day. So deploy the new secret straight away, keep accepting the old one for at least a day (`SYNUP_WEBHOOK_SECRET_OLD` in the examples), then remove it.
+Rotating (under **Developer → Webhooks**) takes effect at once. For the next 7 days every delivery, retries included, is signed with both secrets: the first `v1` with the new secret, the second with the old one. An endpoint still on the old secret keeps working, so deploy the new secret at any point in that window. **Revoke** the old secret on the same page to end the window early.
+
+A verifier must accept a match on any `v1`, as the examples above do. One that checks only the first or only the last `v1` fails during the window. `SYNUP_WEBHOOK_SECRET_OLD` in the examples is optional: set it if you want an endpoint to accept either secret while you switch over.
