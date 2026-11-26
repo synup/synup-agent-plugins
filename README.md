@@ -17,7 +17,7 @@ The plugin is configuration and instructions only. Nothing in it runs on your ma
 1. In Cursor, open the Marketplace, search for **Synup** and install it.
 2. In Cursor's MCP settings, **synup** shows as needing sign-in. Click the sign-in button next to it. Cursor also asks the first time its agent needs Synup.
 3. Your browser opens Synup's sign-in page. Sign in, choose the workspace Cursor should use (if you belong to more than one), and click **Agree & Allow Access**.
-   - Leave **List tools upfront** unchecked. Synup has hundreds of actions, and Cursor finds the ones it needs as it goes.
+   - **List tools upfront** is your choice. Ticked, Cursor sees every Synup action at once. Unticked, it sees five tools that look actions up. Cursor works either way.
 4. Back in Cursor, Synup shows as connected.
 
 Cursor never sees your Synup password. To disconnect, open **Developer → MCP Connections** in Synup and click **Revoke** next to Cursor.

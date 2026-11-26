@@ -9,14 +9,16 @@ The `synup` MCP server acts on the user's real Synup workspace. A workspace (an 
 
 ## Reaching the tools
 
-The server exposes five tools that lead to several hundred Synup actions:
+Synup has several hundred actions. Depending on a choice the user made when signing in, the server shows them in one of two ways:
 
-- `search_os_tools`: find actions by what you want to do, for example "reply to a review".
-- `list_os_tools`: browse actions by area.
-- `describe_os_tool` / `describe_os_tools`: read an action's exact inputs.
-- `call_os_tool`: run an action by name with its arguments.
+- **Every action listed directly**, with names like `list_clients` and `get_listings_rollup`. Call them by name.
+- **Five finder tools** that lead to the actions:
+  - `search_os_tools`: find actions by what you want to do, for example "reply to a review".
+  - `list_os_tools`: browse actions by area.
+  - `describe_os_tool` / `describe_os_tools`: read an action's exact inputs.
+  - `call_os_tool`: run an action by name with its arguments.
 
-Describe an action before you first call it. Inputs differ from action to action and can change, so never guess field names.
+The action names below work either way. Read an action's inputs before you first call it. They differ from action to action and can change, so never guess field names.
 
 ## Ground rules
 
@@ -61,6 +63,6 @@ Lead with what needs action. Don't list every directory.
 
 ## When something goes wrong
 
-- **Unknown tool:** search again with `search_os_tools`.
+- **Unknown tool:** look the action up again, in the tool list or with `search_os_tools`.
 - **Access or plan refusal:** explain it. The user fixes it in Synup.
 - **Rate limit exceeded:** the error says how many seconds to wait. Wait that long instead of retrying in a loop.
