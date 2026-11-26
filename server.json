@@ -1,0 +1,25 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.synup/mcp",
+  "title": "Synup",
+  "description": "Local listings, reviews, posts and rankings for every client and location in Synup.",
+  "version": "1.0.0",
+  "websiteUrl": "https://synup.com/developers/mcp/",
+  "repository": {
+    "url": "https://github.com/synup/synup-agent-plugins",
+    "source": "github"
+  },
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/synup/synup-agent-plugins/master/assets/logo-512.png",
+      "mimeType": "image/png",
+      "sizes": ["512x512"]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://ai.synup.com/mcp"
+    }
+  ]
+}

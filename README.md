@@ -1,8 +1,8 @@
-# Synup for Cursor
+# Synup for Cursor, Cline and other AI tools
 
-[Synup](https://www.synup.com) helps agencies and multi-location businesses keep their business listings accurate across directories, answer reviews, publish posts to Google and social networks, and track how they rank in local search. This plugin connects Cursor to your Synup account.
+[Synup](https://www.synup.com) helps agencies and multi-location businesses keep their business listings accurate across directories, answer reviews, publish posts to Google and social networks, and track how they rank in local search. This repository connects AI tools to your Synup account: a Cursor plugin, install notes for Cline, and Synup's entry for the official MCP Registry.
 
-It adds two things to Cursor:
+The Cursor plugin adds two things to Cursor:
 
 - **The Synup MCP server.** Cursor's agent can look things up and get work done in your Synup workspace: clients, locations, listings, reviews, posts and rankings.
 - **Three skills** that Cursor's agent reads when your request matches one:
@@ -12,7 +12,7 @@ It adds two things to Cursor:
 
 The plugin is configuration and instructions only. Nothing in it runs on your machine, and it holds no keys.
 
-## Install
+## Install in Cursor
 
 1. In Cursor, open the Marketplace, search for **Synup** and install it.
 2. In Cursor's MCP settings, **synup** shows as needing sign-in. Click the sign-in button next to it. Cursor also asks the first time its agent needs Synup.
@@ -21,6 +21,18 @@ The plugin is configuration and instructions only. Nothing in it runs on your ma
 4. Back in Cursor, Synup shows as connected.
 
 Cursor never sees your Synup password. To disconnect, open **Developer → MCP Connections** in Synup and click **Revoke** next to Cursor.
+
+## Install in Cline
+
+1. In Cline, open **MCP Servers → Remote Servers**.
+2. Add a server named `synup` with the URL `https://ai.synup.com/mcp` and the transport **Streamable HTTP**.
+3. Click **Authenticate** next to `synup`, then sign in to Synup in your browser as above.
+
+Or ask Cline to "set up the Synup MCP server from https://github.com/synup/synup-agent-plugins". It follows [llms-install.md](llms-install.md).
+
+## Any other MCP app
+
+Point it at `https://ai.synup.com/mcp` (Streamable HTTP). Sign-in uses OAuth 2.1 in your browser, so there are no keys to copy.
 
 ## Things to ask
 
@@ -53,6 +65,9 @@ Writing code:
 | `skills/synup-workflows/SKILL.md` | How the agent finds and uses Synup's tools, and when it must ask you first |
 | `skills/synup-api/SKILL.md` | API keys, auth header, paging, rate limits and errors, with links to the API reference |
 | `skills/synup-webhooks/SKILL.md` | Checking webhook signatures, event payloads, retries and setup |
+| `llms-install.md` | Step-by-step setup that Cline and other AI agents can follow |
+| `server.json` | Synup's entry for the official MCP Registry |
+| `assets/` | The Synup logo (SVG, and PNG at 400 and 512 pixels) |
 
 ## Developer documentation
 
