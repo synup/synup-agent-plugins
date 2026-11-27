@@ -31,8 +31,12 @@ Cursor never sees your Synup password. To disconnect, open **Developer → MCP C
    ```
 
    It works in the Antigravity app, IDE and CLI.
-2. In the app, open **Customizations → Installed**. Under **MCP Servers**, click **Authenticate** next to Synup.
-3. Sign in to Synup in your browser as above. Antigravity then shows a code: copy it, paste it into **Enter authorization code**, and click **Submit**.
+2. Start the sign-in:
+   - **CLI:** type `/mcp`, choose **synup_synup** and pick **Restart**. Antigravity opens Synup's sign-in in your browser.
+   - **App:** open **Customizations → Installed**. Under **MCP Servers**, click **Authenticate** next to Synup.
+3. Sign in to Synup in your browser as above. Antigravity then shows a code. Paste it where Antigravity asks for the authorization code (in the CLI, the terminal) and confirm.
+
+Synup then shows as authenticated, with its tools listed. If the CLI says Synup isn't connected even though the plugin is installed, open `/mcp` and pick **Restart** on **synup_synup**: the CLI can skip plugin servers while it's still loading your Google sign-in.
 
 ## Install in Devin
 
@@ -45,7 +49,15 @@ Cursor never sees your Synup password. To disconnect, open **Developer → MCP C
    It works in the Devin CLI and Devin Desktop.
 2. The first time Devin uses Synup, it opens your browser to sign in to Synup as above.
 
-To use Synup in Devin's cloud sessions, connect it in Devin's web app. Add an MCP server with the URL `https://ai.synup.com/mcp`, choose **OAuth**, and click **Connect**.
+To use Synup in Devin's cloud sessions, connect it in Devin's web app:
+
+1. Open **Customize → MCPs** and add a **New MCP**.
+2. Fill it in:
+   - **Name:** Synup.
+   - **Transport:** **HTTP**.
+   - **Server URL:** `https://ai.synup.com/mcp`.
+   - **Authentication:** **OAuth**.
+3. Click **Add**, then sign in to Synup in the browser window that opens. Synup then shows as **Connected**.
 
 ## Install in Cline
 
