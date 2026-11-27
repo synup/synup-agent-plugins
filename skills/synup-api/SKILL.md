@@ -1,6 +1,13 @@
 ---
 name: synup-api
 description: Use when writing, reviewing or debugging code that calls Synup's REST API at https://ai.synup.com/api/v1. Covers creating and storing API keys, the Authorization Bearer header and key scopes, finding the right endpoint and its fields in Synup's English API reference, paging through lists, rate limits and 429 retries, and error responses.
+metadata:
+  openclaw:
+    homepage: https://synup.com/developers/
+    envVars:
+      - name: SYNUP_API_KEY
+        required: false
+        description: Synup API key used by the code examples, created under Developer → API Keys in Synup. The skill itself needs no key.
 ---
 
 # Synup API

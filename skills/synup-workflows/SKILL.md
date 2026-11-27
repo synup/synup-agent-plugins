@@ -1,6 +1,9 @@
 ---
 name: synup-workflows
 description: Use when the user wants to look something up or get something done in their Synup account through the Synup MCP server, such as finding a client or location, checking listings and directory sync, reading or replying to reviews, planning or scheduling posts, or checking local rankings. Covers how to find the right Synup tool and the rule to show drafts and ask before changing anything.
+metadata:
+  openclaw:
+    homepage: https://synup.com/developers/mcp/
 ---
 
 # Synup workflows

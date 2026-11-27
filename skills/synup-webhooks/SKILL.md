@@ -1,6 +1,16 @@
 ---
 name: synup-webhooks
 description: Use when building, testing or debugging a server endpoint that receives Synup webhooks. Covers checking the Synup-Signature header (HMAC-SHA256 over "t.rawBody", with a five-minute limit), the event envelope and payloads such as review.received, listing.sync.failed and post.published, retries and duplicates, rotating the signing secret, and setting up the endpoint under Developer → Webhooks.
+metadata:
+  openclaw:
+    homepage: https://synup.com/developers/webhooks/
+    envVars:
+      - name: SYNUP_WEBHOOK_SECRET
+        required: false
+        description: The endpoint's signing secret (whsec_...), used by the verifier examples. The skill itself needs none.
+      - name: SYNUP_WEBHOOK_SECRET_OLD
+        required: false
+        description: Optional second secret the examples also accept while switching over after a rotation.
 ---
 
 # Synup webhooks

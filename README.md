@@ -79,6 +79,18 @@ Then run `/mcp auth synup` in Gemini CLI and sign in to Synup in your browser.
 
 Point it at `https://ai.synup.com/mcp` (Streamable HTTP). Sign-in uses OAuth 2.1 in your browser, so there are no keys to copy.
 
+## Just the skills
+
+The three skills also install on their own into agents that read Agent Skills, such as Claude Code, Codex, Cursor and OpenClaw:
+
+```bash
+npx skills add synup/synup-agent-plugins
+```
+
+[![skills.sh](https://skills.sh/b/synup/synup-agent-plugins)](https://skills.sh/synup/synup-agent-plugins)
+
+The Synup workflows skill works through the MCP server, so connect that as well (see above). The API and webhooks skills need nothing else.
+
 ## Things to ask
 
 Working in your Synup account:
